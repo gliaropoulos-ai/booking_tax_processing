@@ -1,2 +1,11 @@
 .DS_Store
 .venv
+.vscode
+__pycache__/
+*.csv
+*.xlsx
+*.png
+.env
+.idea
+.ipynb_checkpoints
+.venv
