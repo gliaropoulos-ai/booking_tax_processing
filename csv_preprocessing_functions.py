@@ -9,22 +9,27 @@ def to_snake_case(name):
     return name.lower()
 
 
-def curate_csv_file(df):
+def curate_airbnb_csv_file(df):
     # Read file
     # df = pd.read_csv(file_name, sep=";", encoding= "ISO-8859-7")
     # Rename Columns
-    df.columns = ['transaction date', 'value date', 'description', 'amount', 'balance']
+    df.columns = ['Confirmation Code', 'Status', 'Guest Name', 'Contact Number', 'Number of Adults', 'Number of Children', 
+                  'Number of Infants', 'Start Date', 'End Date', 'Nights', 'Booked Date', 'Listing', 'Amount']                
     # Keep only rows with transaction date
     df = df.loc[df['transaction date'].dropna().index]
     # Keep only columns of interest
-    df = df[['transaction date', 'description', 'amount']]
+    df['Currency'] = 'EUR'
+    cols_to_keep = ['Confirmation Code', 'Status', 'Start Date', 'End Date', 'Nights', 'Booked Date', 'Guest Name', 'Contact Number', 'Listing', 'Currency', 'Amount'] 
+    df = df[cols_to_keep]
+    
     # Fix amount columns
-    df['amount_fix'] = df['amount'].apply(lambda x: float(str(x).replace(".","").replace(",",".")))
+    # df['amount_fix'] = df['amount'].apply(lambda x: float(str(x).replace(".","").replace(",",".")))
     # Fix transaction date
-    df['transaction date_fix'] = pd.to_datetime(df['transaction date'], dayfirst = True , format="%d/%m/%Y")
-    df_final = df[['transaction date_fix', 'description', 'amount_fix']]
-    return df_final.rename(columns= {'transaction date_fix': 'transaction date', 'amount_fix': 'amount'})
+    # df['transaction date_fix'] = pd.to_datetime(df['transaction date'], dayfirst = True , format="%d/%m/%Y")
+    # df_final = df[['transaction date_fix', 'description', 'amount_fix']]
+    # return df_final.rename(columns= {'transaction date_fix': 'transaction date', 'amount_fix': 'amount'})
+    return df
 
 def input_to_output_csv(file):
-    out_file = curate_csv_file(file)
+    out_file = curate_airbnb_csv_file(file)
     return out_file

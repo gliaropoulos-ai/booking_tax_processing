@@ -2,19 +2,19 @@ import streamlit as stl
 import io
 import pandas as pd
 from zipfile import ZipFile
-from csv_preprocessing_functions import to_snake_case, curate_csv_file, input_to_output_csv
+from csv_preprocessing_functions import to_snake_case, curate_airbnb_csv_file, input_to_output_csv
 
 
-stl.title("CSV Preprocessing for banking")
+stl.title("CSV Preprocessing for online booking platforms")
 
-stl.write("A tool to help automate our finance and backoffice services")
+stl.write("A tool to help automate our bookings in platforms")
 
 uploaded_file = stl.file_uploader("Upload a CSV file" , type=["csv", "xlsx"])
 
 if uploaded_file:
     stl.write("File to be processed: ", uploaded_file.name)
-    csv_uploaded_file = pd.read_csv(uploaded_file, sep=";", encoding= "ISO-8859-7")
-    data_out = curate_csv_file(csv_uploaded_file)
+    csv_uploaded_file = pd.read_csv(uploaded_file, encoding= "ISO-8859-7")
+    data_out = curate_airbnb_csv_file(csv_uploaded_file)
     clean_name = to_snake_case(uploaded_file.name)
     xlsx_output = stl.toggle('Export XLSX')
     if xlsx_output:
