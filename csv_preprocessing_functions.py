@@ -15,16 +15,14 @@ def curate_airbnb_csv_file(df):
     # Rename Columns
     df.columns = ['Confirmation Code', 'Status', 'Guest Name', 'Contact Number', 'Number of Adults', 'Number of Children', 
                   'Number of Infants', 'Start Date', 'End Date', 'Nights', 'Booked Date', 'Listing', 'Amount']                
-    # Keep only rows with transaction date
-    df = df.loc[df['transaction date'].dropna().index]
     # Keep only columns of interest
     df['Currency'] = 'EUR'
     cols_to_keep = ['Confirmation Code', 'Status', 'Start Date', 'End Date', 'Nights', 'Booked Date', 'Guest Name', 'Contact Number', 'Listing', 'Currency', 'Amount'] 
     df = df[cols_to_keep]
-    
     # Fix amount columns
     # df['amount_fix'] = df['amount'].apply(lambda x: float(str(x).replace(".","").replace(",",".")))
-    # Fix transaction date
+    # Fix dates
+    dates_cols = [ 'Start Date', 'End Date', 'Booked Date']
     # df['transaction date_fix'] = pd.to_datetime(df['transaction date'], dayfirst = True , format="%d/%m/%Y")
     # df_final = df[['transaction date_fix', 'description', 'amount_fix']]
     # return df_final.rename(columns= {'transaction date_fix': 'transaction date', 'amount_fix': 'amount'})
